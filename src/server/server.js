@@ -7,7 +7,11 @@ const passport = require("passport");
 const passportConfig = require("./services/auth");
 const MongoStore = require("connect-mongo")(session);
 const schema = require("./schema/schema");
+const cors = require("cors");
+
 const app = express();
+
+app.use(cors());
 
 const MONGO_URI =
   "mongodb://auth:auth123456@ds157089.mlab.com:57089/authentication";

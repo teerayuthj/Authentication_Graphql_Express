@@ -21,12 +21,18 @@
     "express-session": "^1.15.6",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "grommet": "^2.2.1",
+    "grommet-icons": "^4.1.0",
     "lodash": "^4.17.11",
     "mongodb": "^3.1.10",
-    "mongoose": "^5.4.1",
+    "mongoose": "^5.4.2",
     "nodemon": "^1.18.9",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "react-router": "^4.3.1",
+    "react-router-config": "^4.4.0-beta.6",
+    "react-router-dom": "^4.3.1",
+    "styled-components": "^4.1.3"
   },
   "devDependencies": {
     "bcrypt-nodejs": "0.0.3"
