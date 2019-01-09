@@ -67,7 +67,7 @@ class loginUser extends Component {
                         size="xxlarge"
                         margin="xlarge"
                       >
-                        Login
+                        Log In
                       </Paragraph>
                     </Grommet>
                     <FormField label="Email">
@@ -87,13 +87,15 @@ class loginUser extends Component {
                         name="password"
                       />
                     </FormField>
-
-                    <Button
-                      type="submit"
-                      label="Login"
-                      primary
-                      margin="medium"
-                    />
+                    <Box pad="small">
+                      <Button
+                        type="submit"
+                        label="Log In"
+                        primary
+                        margin="medium"
+                      />
+                      <Button label="Sign Up" href="/signup" />
+                    </Box>
                   </Box>
                 </form>
               </Content>

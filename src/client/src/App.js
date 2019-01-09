@@ -7,7 +7,6 @@ import "./App.css";
 import Head from "./components/Head";
 import Dashboard from "./components/Dashboard";
 import Signup from "./components/Signup";
-
 const client = new ApolloClent({
   uri: "http://localhost:5000/graphql"
 });

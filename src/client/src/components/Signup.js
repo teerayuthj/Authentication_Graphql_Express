@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Mutaion } from "react-apollo";
-import { withRouter } from "react-router-dom";
+import { Mutation } from "react-apollo";
+import { withRouter, NavLink } from "react-router-dom";
 import { SIGNUP_USER } from "../queries";
 import Content from "../style/Content";
 import { Box, Button, FormField, TextInput, Grommet, Paragraph } from "grommet";
@@ -13,7 +13,8 @@ class Signup extends Component {
     this.state = {
       email: "",
       password: "",
-      passwordConfrim: ""
+      passwordConfirm: "",
+      passwordMatch: null
     };
   }
 
@@ -26,43 +27,51 @@ class Signup extends Component {
   }
 
   handlePasswordConFirm() {
-    const { password, passwordConfrim } = this.state;
-    const isMatch = password !== passwordConfrim && password.length <= 8;
+    const { password, passwordConfirm } = this.state;
+    const isMatch = password !== passwordConfirm && password.length <= 7;
     this.setState({
       passwordMatch: isMatch
     });
   }
 
   validateForm() {
-    const { email, password, passwordConfrim } = this.state;
+    const { email, password, passwordConfirm } = this.state;
     const isInvaild =
       !email ||
       !password ||
-      password !== passwordConfrim ||
-      password.length <= 8;
+      password !== passwordConfirm ||
+      password.length <= 7;
     return isInvaild;
   }
 
   render() {
-    const { email, password, passwordConfrim } = this.state;
+    const { email, password, passwordConfirm } = this.state;
+
     return (
       <div>
-        <Mutaion
-          mutaion={SIGNUP_USER}
-          variables={{ email, password, passwordConfrim }}
-        >
+        <Mutation mutation={SIGNUP_USER} variables={{ email, password }}>
           {(signup, { data, loading, error }) => {
             return (
               <Content pad="none">
-                <form>
+                <form
+                  onSubmit={async e => {
+                    e.preventDefault();
+                    const { email, password } = this.state;
+                    await signup({
+                      variables: { email, password },
+                      refetchQueries: { email, password }
+                    });
+                    this.props.history.replace("/login");
+                  }}
+                >
                   <Box>
                     <Grommet theme={grommet}>
                       <Paragraph
                         textAlign="center"
                         size="xxlarge"
-                        margin="xlarge"
+                        margin="large"
                       >
-                        Signup
+                        Sign Up
                       </Paragraph>
                     </Grommet>
                     <FormField label="Email">
@@ -71,6 +80,7 @@ class Signup extends Component {
                         onChange={this.handleChange.bind(this)}
                         type="email"
                         name="email"
+                        size="large"
                       />
                     </FormField>
                     <FormField label="Password">
@@ -79,21 +89,29 @@ class Signup extends Component {
                         onChange={this.handleChange.bind(this)}
                         type="password"
                         name="password"
+                        size="large"
                       />
                     </FormField>
                     <FormField label="Password Confirm">
                       <TextInput
-                        value={passwordConfrim}
-                        name="passwordConfirm"
+                        size="large"
                         type="password"
+                        name="passwordConfirm"
+                        value={passwordConfirm}
                         onChange={this.handleChange.bind(this)}
                         onBlur={this.handlePasswordConFirm.bind(this)}
                       />
                     </FormField>
 
+                    <div>
+                      <p>
+                        Already have an account?
+                        <NavLink to="/login"> Log In</NavLink>
+                      </p>
+                    </div>
                     <Button
                       type="submit"
-                      label="Register"
+                      label="Sign Up"
                       margin="medium"
                       primary
                       disabled={loading || this.validateForm()}
@@ -103,7 +121,7 @@ class Signup extends Component {
               </Content>
             );
           }}
-        </Mutaion>
+        </Mutation>
       </div>
     );
   }
