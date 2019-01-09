@@ -1,38 +1,22 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import { LOGIN_USER } from "../queries";
+import { Mutaion } from "react-apollo";
+import { withRouter } from "react-router-dom";
+import { SIGNUP_USER } from "../queries";
+import Content from "../style/Content";
 import { Box, Button, FormField, TextInput, Grommet, Paragraph } from "grommet";
 import { grommet } from "grommet/themes";
-import Content from "../style/Content";
-import { withRouter } from "react-router-dom";
 
-class loginUser extends Component {
+class Signup extends Component {
   constructor(props) {
     super();
 
     this.state = {
       email: "",
       password: "",
-      errors: ""
+      passwordConfrim: ""
     };
   }
-  /*
-  handleSubmit(event, login) {
-    event.preventDefault();
-    login()
-      .then(async () => {
-        await this.props.refetch();
-        this.clearState();
-        this.props.history.push("/dashboard");
-      })
-      .catch(error => {
-        this.setState({
-          error: error.graphQLErrors.map(x => x.message)
-        });
-        console.error("ERR =>", error.graphQLErrors.map(x => x.message));
-      });
-  }
-  */
+
   handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
@@ -41,25 +25,36 @@ class loginUser extends Component {
     });
   }
 
+  handlePasswordConFirm() {
+    const { password, passwordConfrim } = this.state;
+    const isMatch = password !== passwordConfrim && password.length <= 8;
+    this.setState({
+      passwordMatch: isMatch
+    });
+  }
+
+  validateForm() {
+    const { email, password, passwordConfrim } = this.state;
+    const isInvaild =
+      !email ||
+      !password ||
+      password !== passwordConfrim ||
+      password.length <= 8;
+    return isInvaild;
+  }
+
   render() {
-    const { email, password } = this.state;
+    const { email, password, passwordConfrim } = this.state;
     return (
       <div>
-        <Mutation mutation={LOGIN_USER} variables={{ email, password }}>
-          {(login, { data, loading, error }) => {
+        <Mutaion
+          mutaion={SIGNUP_USER}
+          variables={{ email, password, passwordConfrim }}
+        >
+          {(signup, { data, loading, error }) => {
             return (
               <Content pad="none">
-                <form
-                  onSubmit={async e => {
-                    e.preventDefault();
-                    const { email, password } = this.state;
-                    await login({
-                      variables: { email, password },
-                      refetchQueries: { email, password }
-                    });
-                    this.props.history.replace("/dashboard");
-                  }}
-                >
+                <form>
                   <Box>
                     <Grommet theme={grommet}>
                       <Paragraph
@@ -67,7 +62,7 @@ class loginUser extends Component {
                         size="xxlarge"
                         margin="xlarge"
                       >
-                        Login
+                        Signup
                       </Paragraph>
                     </Grommet>
                     <FormField label="Email">
@@ -78,7 +73,6 @@ class loginUser extends Component {
                         name="email"
                       />
                     </FormField>
-
                     <FormField label="Password">
                       <TextInput
                         value={password}
@@ -87,22 +81,32 @@ class loginUser extends Component {
                         name="password"
                       />
                     </FormField>
+                    <FormField label="Password Confirm">
+                      <TextInput
+                        value={passwordConfrim}
+                        name="passwordConfirm"
+                        type="password"
+                        onChange={this.handleChange.bind(this)}
+                        onBlur={this.handlePasswordConFirm.bind(this)}
+                      />
+                    </FormField>
 
                     <Button
                       type="submit"
-                      label="Login"
-                      primary
+                      label="Register"
                       margin="medium"
+                      primary
+                      disabled={loading || this.validateForm()}
                     />
                   </Box>
                 </form>
               </Content>
             );
           }}
-        </Mutation>
+        </Mutaion>
       </div>
     );
   }
 }
 
-export default withRouter(loginUser);
+export default withRouter(Signup);

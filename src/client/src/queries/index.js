@@ -17,3 +17,12 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const SIGNUP_USER = gql`
+  mutation Signup($email: String, $password: String) {
+    signup(email: $email, password: $password) {
+      id
+      email
+    }
+  }
+`;
