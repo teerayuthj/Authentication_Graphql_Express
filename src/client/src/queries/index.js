@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const CURRENT_USER = gql`
-  {
+ query {
     user {
       id
       email
@@ -21,6 +21,15 @@ export const LOGIN_USER = gql`
 export const SIGNUP_USER = gql`
   mutation Signup($email: String, $password: String) {
     signup(email: $email, password: $password) {
+      id
+      email
+    }
+  }
+`;
+
+export const LOGOUT_USER = gql`
+  mutation {
+    logout {
       id
       email
     }

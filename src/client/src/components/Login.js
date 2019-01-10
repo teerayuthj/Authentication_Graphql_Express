@@ -5,6 +5,7 @@ import { Box, Button, FormField, TextInput, Grommet, Paragraph } from "grommet";
 import { grommet } from "grommet/themes";
 import Content from "../style/Content";
 import { withRouter } from "react-router-dom";
+import ErrorMessage from "./error";
 
 class loginUser extends Component {
   constructor(props) {
@@ -12,33 +13,22 @@ class loginUser extends Component {
 
     this.state = {
       email: "",
-      password: "",
-      errors: ""
+      password: ""
     };
   }
-  /*
-  handleSubmit(event, login) {
-    event.preventDefault();
-    login()
-      .then(async () => {
-        await this.props.refetch();
-        this.clearState();
-        this.props.history.push("/dashboard");
-      })
-      .catch(error => {
-        this.setState({
-          error: error.graphQLErrors.map(x => x.message)
-        });
-        console.error("ERR =>", error.graphQLErrors.map(x => x.message));
-      });
-  }
-  */
+
   handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
       [name]: value
     });
+  }
+
+  validateForm() {
+    const { email, password } = this.state;
+    const isInvalid = !email || !password || password.length <= 7;
+    return isInvalid;
   }
 
   render() {
@@ -87,16 +77,17 @@ class loginUser extends Component {
                         name="password"
                       />
                     </FormField>
-                    <Box pad="small">
-                      <Button
-                        type="submit"
-                        label="Log In"
-                        primary
-                        margin="medium"
-                      />
-                      <Button label="Sign Up" href="/signup" />
-                    </Box>
+
+                    <Button
+                      type="submit"
+                      label="Log In"
+                      primary
+                      margin="medium"
+                      disabled={loading || this.validateForm()}
+                    />
+                    <Button label="Sign Up" href="/signup" margin="small" />
                   </Box>
+                  {error && <ErrorMessage error={error} />}
                 </form>
               </Content>
             );

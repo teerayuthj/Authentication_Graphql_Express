@@ -5,6 +5,7 @@ import { SIGNUP_USER } from "../queries";
 import Content from "../style/Content";
 import { Box, Button, FormField, TextInput, Grommet, Paragraph } from "grommet";
 import { grommet } from "grommet/themes";
+import ErrorMessage from "./error";
 
 class Signup extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class Signup extends Component {
                     const { email, password } = this.state;
                     await signup({
                       variables: { email, password },
-                      refetchQueries: { email, password }
+                      refetchqueries: { email, password }
                     });
                     this.props.history.replace("/login");
                   }}
@@ -117,6 +118,7 @@ class Signup extends Component {
                       disabled={loading || this.validateForm()}
                     />
                   </Box>
+                  {error && <ErrorMessage error={error} />}
                 </form>
               </Content>
             );
