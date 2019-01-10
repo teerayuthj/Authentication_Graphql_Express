@@ -1,26 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import withSession from "./components/Session/withSession";
+
 import Login from "./components/Login";
-import "./App.css";
-import Head from "./components/Head";
 import Dashboard from "./components/Dashboard";
 import Signup from "./components/Signup";
-import Logout from "./components/Logout";
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Head} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/signup" component={Signup} />
-        </Switch>
-      </Router>
-    );
-  }
-}
+import "./App.css";
+
+const Root = ({ refetch, session }) => (
+  <Router>
+    <Switch>
+      <Route
+        path="/login"
+        render={props => <Login {...props} refetch={refetch} />}
+      />
+      <Route
+        path="/Signup"
+        render={props => <Signup {...props} refetch={refetch} />}
+      />
+      <Route
+        path="/dashboard"
+        render={props => <Dashboard {...props} session={session} />}
+      />
+    </Switch>
+  </Router>
+);
+
+const App = withSession(Root);
 
 export default App;

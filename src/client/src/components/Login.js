@@ -31,6 +31,15 @@ class loginUser extends Component {
     return isInvalid;
   }
 
+  handleSubmit(event, login) {
+    event.preventDefault();
+    const { email, password } = this.state;
+    login().then(async ({ data }) => {
+      this.setState({ variables: email, password });
+      await this.props.history.replace("/dashboard");
+    });
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -39,17 +48,7 @@ class loginUser extends Component {
           {(login, { data, loading, error }) => {
             return (
               <Content pad="none">
-                <form
-                  onSubmit={async e => {
-                    e.preventDefault();
-                    const { email, password } = this.state;
-                    await login({
-                      variables: { email, password },
-                      refetchQueries: { email, password }
-                    });
-                    this.props.history.replace("/dashboard");
-                  }}
-                >
+                <form onSubmit={event => this.handleSubmit(event, login)}>
                   <Box>
                     <Grommet theme={grommet}>
                       <Paragraph

@@ -90,12 +90,10 @@ class Signup extends Component {
                         onChange={this.handleChange.bind(this)}
                         type="password"
                         name="password"
-                        size="large"
                       />
                     </FormField>
                     <FormField label="Password Confirm">
                       <TextInput
-                        size="large"
                         type="password"
                         name="passwordConfirm"
                         value={passwordConfirm}
