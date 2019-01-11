@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import { LOGIN_USER } from "../queries";
+import { withRouter } from "react-router-dom";
 import { Box, Button, FormField, TextInput, Grommet, Paragraph } from "grommet";
 import { grommet } from "grommet/themes";
-import Content from "../style/Content";
-import { withRouter } from "react-router-dom";
-import ErrorMessage from "./error";
+
+import { LOGIN_USER } from "../../queries";
+import Content from "../../style/Content";
+import ErrorMessage from "../Error";
 
 class loginUser extends Component {
   constructor(props) {

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Button } from "grommet";
-import { LOGOUT_USER } from "../queries";
 import { Mutation } from "react-apollo";
-import ErrorMessage from "./error";
+
+import { LOGOUT_USER } from "../../queries";
+import ErrorMessage from "../Error";
 
 class logut extends Component {
   render() {

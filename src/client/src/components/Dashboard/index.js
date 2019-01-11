@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Logout from "./Logout";
-import withAuth from "./Session/withAuth";
+
+import Logout from "../Logout";
+import withAuth from "../Session/withAuth";
 
 class Dashboard extends Component {
   render() {

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { withRouter, NavLink } from "react-router-dom";
-import { SIGNUP_USER } from "../queries";
-import Content from "../style/Content";
 import { Box, Button, FormField, TextInput, Grommet, Paragraph } from "grommet";
 import { grommet } from "grommet/themes";
-import ErrorMessage from "./error";
+
+import Content from "../../style/Content";
+import { SIGNUP_USER } from "../../queries";
+import ErrorMessage from "../Error";
 
 class Signup extends Component {
   constructor(props) {

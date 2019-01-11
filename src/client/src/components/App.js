@@ -1,12 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import withSession from "./components/Session/withSession";
 
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import Signup from "./components/Signup";
-
-import "./App.css";
+import withSession from "./Session/withSession";
+import Login from "./Login";
+import Dashboard from "./Dashboard";
+import Signup from "./Signup";
 
 const Root = ({ refetch, session }) => (
   <Router>

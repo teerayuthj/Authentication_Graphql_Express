@@ -1,15 +1,16 @@
 const express = require("express");
-const models = require("./models");
-const expressGraphQL = require("express-graphql");
-const mongoose = require("mongoose");
-const session = require("express-session");
-const passport = require("passport");
-const passportConfig = require("./services/auth");
-const MongoStore = require("connect-mongo")(session);
-const schema = require("./schema/schema");
-const cors = require("cors");
-
 const app = express();
+const expressGraphQL = require("express-graphql");
+const session = require("express-session");
+
+const cors = require("cors");
+const MongoStore = require("connect-mongo")(session);
+const mongoose = require("mongoose");
+const passport = require("passport");
+
+const models = require("./models");
+const passportConfig = require("./services/auth");
+const schema = require("./schema/schema");
 
 app.use(cors());
 
