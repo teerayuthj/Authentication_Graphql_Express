@@ -21,8 +21,7 @@ class Signup extends Component {
   }
 
   handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
     this.setState({
       [name]: value
     });
@@ -63,7 +62,7 @@ class Signup extends Component {
                       variables: { email, password },
                       refetchqueries: { email, password }
                     });
-                    this.props.history.replace("/login");
+                    this.props.history.push("/login");
                   }}
                 >
                   <Box>

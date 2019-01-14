@@ -19,8 +19,7 @@ class loginUser extends Component {
   }
 
   handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
     this.setState({
       [name]: value
     });
@@ -32,15 +31,6 @@ class loginUser extends Component {
     return isInvalid;
   }
 
-  handleSubmit(event, login) {
-    event.preventDefault();
-    const { email, password } = this.state;
-    login().then(async ({ data }) => {
-      this.setState({ variables: email, password });
-      await this.props.history.replace("/dashboard");
-    });
-  }
-
   render() {
     const { email, password } = this.state;
     return (
@@ -49,7 +39,17 @@ class loginUser extends Component {
           {(login, { data, loading, error }) => {
             return (
               <Content pad="none">
-                <form onSubmit={event => this.handleSubmit(event, login)}>
+                <form
+                  onSubmit={async e => {
+                    e.preventDefault();
+                    const { email, password } = this.state;
+                    await login({
+                      variables: { email, password },
+                      refetchqueries: { email, password }
+                    });
+                    this.props.history.push("/dashboard");
+                  }}
+                >
                   <Box>
                     <Grommet theme={grommet}>
                       <Paragraph

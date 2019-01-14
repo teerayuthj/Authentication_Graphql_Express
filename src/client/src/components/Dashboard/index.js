@@ -4,6 +4,10 @@ import Logout from "../Logout";
 import withAuth from "../Session/withAuth";
 
 class Dashboard extends Component {
+  constructor(props) {
+    super();
+  }
+
   render() {
     return (
       <div>
@@ -14,4 +18,6 @@ class Dashboard extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentUser)(Dashboard);
+export default withAuth(session => session && session.user && session.loading)(
+  Dashboard
+);

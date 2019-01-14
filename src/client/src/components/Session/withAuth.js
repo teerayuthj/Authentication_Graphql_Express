@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { CURRENT_USER } from "../../queries";
 import Login from "../Login";
 
-const withAuth = conditionFunc => Component => props => {
+const withAuth = conditionFn => Component => props => {
   if (props.unitTesting === "ture") {
     return <Component {...props} />;
   }
@@ -14,13 +14,11 @@ const withAuth = conditionFunc => Component => props => {
     <Query query={CURRENT_USER}>
       {({ data, loading, error, refetch }) => {
         if (loading) return null;
-        /*
-        Need Funtion Check Auth data id, email 
-        */
-        if (props.session.currentUser === null)
+
+        if (props.session.user && props.session.loading === null)
           return <Login {...props} refetch={refetch} />;
 
-        return conditionFunc(data) ? (
+        return conditionFn(data) ? (
           <Component {...props} />
         ) : (
           <Redirect to="/login" />
