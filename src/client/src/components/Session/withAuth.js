@@ -3,25 +3,19 @@ import { Query } from "react-apollo";
 import { Redirect } from "react-router-dom";
 
 import { CURRENT_USER } from "../../queries";
-import Login from "../Login";
 
 const withAuth = conditionFn => Component => props => {
-  if (props.unitTesting === "ture") {
-    return <Component {...props} />;
-  }
-
   return (
     <Query query={CURRENT_USER}>
-      {({ data, loading, error, refetch }) => {
-        if (loading) return null;
-
-        if (props.session.user && props.session.loading === null)
-          return <Login {...props} refetch={refetch} />;
+      {({ data, networkStatus }) => {
+        if (networkStatus < 7) {
+          return null;
+        }
 
         return conditionFn(data) ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="login" />
         );
       }}
     </Query>

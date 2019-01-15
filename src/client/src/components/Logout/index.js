@@ -1,36 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import { Button } from "grommet";
-import { Mutation } from "react-apollo";
+import { ApolloConsumer } from "react-apollo";
+import { Helmet } from "react-helmet";
 
-import { LOGOUT_USER } from "../../queries";
-import ErrorMessage from "../Error";
+const handleSigout = (client, history) => {
+  client.resetStore();
+  history.push("/login");
+};
 
-class logut extends Component {
-  render() {
-    return (
-      <div>
-        <Mutation mutation={LOGOUT_USER}>
-          {(logut, { data, loading, error }) => {
-            return (
-              <div>
-                <Button
-                  label="Log Out"
-                  onClick={async e => {
-                    e.preventDefault();
-                    await logut({
-                      refetchQueries: { logut }
-                    });
-                    this.props.history.replace("/login");
-                  }}
-                />
-                {error && <ErrorMessage error={error} />}
-              </div>
-            );
-          }}
-        </Mutation>
-      </div>
-    );
-  }
-}
+const logut = ({ history }) => (
+  <ApolloConsumer>
+    {client => {
+      return (
+        <div>
+          <Helmet>
+            <title>Logout</title>
+          </Helmet>
+          <Button
+            label="Logout"
+            onClick={() => handleSigout(client, history)}
+          />
+        </div>
+      );
+    }}
+  </ApolloConsumer>
+);
 export default withRouter(logut);

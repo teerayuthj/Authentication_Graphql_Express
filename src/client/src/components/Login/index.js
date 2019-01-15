@@ -3,19 +3,28 @@ import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
 import { Box, Button, FormField, TextInput, Grommet, Paragraph } from "grommet";
 import { grommet } from "grommet/themes";
+import { Helmet } from "react-helmet";
 
 import { LOGIN_USER } from "../../queries";
 import Content from "../../style/Content";
 import ErrorMessage from "../Error";
+
+const initialState = {
+  email: "",
+  password: ""
+};
 
 class loginUser extends Component {
   constructor(props) {
     super();
 
     this.state = {
-      email: "",
-      password: ""
+      ...initialState
     };
+  }
+
+  clearState() {
+    this.setState({ ...initialState });
   }
 
   handleChange(event) {
@@ -35,6 +44,9 @@ class loginUser extends Component {
     const { email, password } = this.state;
     return (
       <div>
+        <Helmet>
+          <title>Login</title>
+        </Helmet>
         <Mutation mutation={LOGIN_USER} variables={{ email, password }}>
           {(login, { data, loading, error }) => {
             return (
@@ -47,6 +59,8 @@ class loginUser extends Component {
                       variables: { email, password },
                       refetchqueries: { email, password }
                     });
+                    this.props.refetch();
+                    this.clearState();
                     this.props.history.push("/dashboard");
                   }}
                 >

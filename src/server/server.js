@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const expressGraphQL = require("express-graphql");
 const session = require("express-session");
+const bodyParser = require("body-parser");
 
 const cors = require("cors");
 const MongoStore = require("connect-mongo")(session);
@@ -13,6 +14,9 @@ const passportConfig = require("./services/auth");
 const schema = require("./schema/schema");
 
 app.use(cors());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const MONGO_URI =
   "mongodb://auth:auth123456@ds157089.mlab.com:57089/authentication";
