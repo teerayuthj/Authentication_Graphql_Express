@@ -4,12 +4,15 @@ import { Button } from "grommet";
 import { ApolloConsumer } from "react-apollo";
 import { Helmet } from "react-helmet";
 
-const handleSigout = (client, history) => {
+import * as routes from "../constants/routes";
+import history from "../constants/history";
+
+const handleSigout = client => {
   client.resetStore();
-  history.push("/login");
+  history.push(routes.LOG_IN);
 };
 
-const logut = ({ history }) => (
+const Logout = () => (
   <ApolloConsumer>
     {client => {
       return (
@@ -17,13 +20,12 @@ const logut = ({ history }) => (
           <Helmet>
             <title>Logout</title>
           </Helmet>
-          <Button
-            label="Logout"
-            onClick={() => handleSigout(client, history)}
-          />
+          <Button label="Logout" onClick={() => handleSigout(client)} />
         </div>
       );
     }}
   </ApolloConsumer>
 );
-export default withRouter(logut);
+export default withRouter(handleSigout);
+
+export { Logout };
