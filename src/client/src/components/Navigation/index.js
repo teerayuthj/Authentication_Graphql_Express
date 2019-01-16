@@ -16,7 +16,7 @@ const Navigation = ({ session }) => (
 
 const NavigationAuth = ({ session }) => (
   <div>
-    {session && session.user === "DASHBOARD" && (
+    {session && session.user && session.user.email === "DASHBOARD" && (
       <li>
         <Link to={routes.DASHBOARD}>DASHBOARD</Link>
       </li>

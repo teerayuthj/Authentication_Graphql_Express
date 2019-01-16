@@ -3,6 +3,7 @@ import { Query } from "react-apollo";
 import { Redirect } from "react-router-dom";
 
 import { CURRENT_USER } from "../../queries";
+import * as routes from "../constants/routes";
 
 const withAuth = conditionFn => Component => props => {
   return (
@@ -15,7 +16,7 @@ const withAuth = conditionFn => Component => props => {
         return conditionFn(data) ? (
           <Component {...props} />
         ) : (
-          <Redirect to="login" />
+          <Redirect to={routes.LOG_IN} />
         );
       }}
     </Query>

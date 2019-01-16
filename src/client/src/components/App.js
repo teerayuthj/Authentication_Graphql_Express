@@ -7,14 +7,10 @@ import Dashboard from "./Dashboard";
 import Signup from "./Signup";
 import * as routes from "./constants/routes";
 import history from "./constants/history";
-import Navigation from "./Navigation";
 
-const App = ({ session, refetch }) => (
+const App = ({ refetch }) => (
   <Router history={history}>
     <div>
-      <Navigation />
-      <hr />
-
       <Route exact path={routes.DASHBOARD} component={() => <Dashboard />} />
       <Route
         exact

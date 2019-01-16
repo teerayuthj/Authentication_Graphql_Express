@@ -33,7 +33,7 @@ passport.use(
         return done(err);
       }
       if (!user) {
-        return done(null, false, "Invalid Credentials");
+        return done(null, false, "Invalid username or password.");
       }
       user.comparePassword(password, (err, isMatch) => {
         if (err) {
@@ -42,7 +42,7 @@ passport.use(
         if (isMatch) {
           return done(null, user);
         }
-        return done(null, false, "Invalid credentials.");
+        return done(null, false, "Invalid username or password.");
       });
     });
   })
@@ -90,7 +90,7 @@ function login({ email, password, req }) {
   return new Promise((resolve, reject) => {
     passport.authenticate("local", (err, user) => {
       if (!user) {
-        reject("Invalid credentials.");
+        reject("Invalid username or password.");
       }
 
       req.login(user, () => resolve(user));

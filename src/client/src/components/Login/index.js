@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet";
 
 import { LOGIN_USER } from "../../queries";
 import Content from "../../style/Content";
-import { Signup } from "../Signup";
 import * as routes from "../constants/routes";
 import ErrorMessage from "../Error";
 
@@ -18,8 +17,7 @@ const initialState = {
 
 const LogInPage = ({ history, refetch }) => (
   <div>
-    <loginUser history={history} refetch={refetch} />
-    <Signup />
+    <LogInPage history={history} refetch={refetch} />
   </div>
 );
 
@@ -65,12 +63,11 @@ class loginUser extends Component {
                     e.preventDefault();
                     const { email, password } = this.state;
                     await login({
-                      variables: { email, password },
-                      refetchqueries: { email, password }
+                      variables: { email, password }
                     });
                     this.props.refetch();
                     this.clearState();
-                    this.props.history.push(routes.Dashboard);
+                    this.props.history.push(routes.DASHBOARD);
                   }}
                 >
                   <Box>

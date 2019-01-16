@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 
-import Logout from "../Logout";
 import withAuth from "../Session/withAuth";
 
 class Dashboard extends Component {
@@ -15,13 +14,14 @@ class Dashboard extends Component {
         <Helmet>
           <title>Dashboard</title>
         </Helmet>
-        Dashboard
-        <Logout />
+        <div>
+          <h1>Dashboard</h1>
+        </div>
       </div>
     );
   }
 }
 
 export default withAuth(
-  session => session && session.user & session.networkStatus
+  session => session && session.user && session.user.email === "DASHBOARD"
 )(Dashboard);
