@@ -1,22 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ApolloClent from "apollo-client";
+import { BrowserRouter } from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { HttpLink } from "apollo-link-http";
+import { createHttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
-import { ApolloLink, split } from "apollo-link";
-import { getMainDefinition } from "apollo-utilities";
+import { ApolloLink } from "apollo-link";
 
 import App from "./components/App";
-import Logout from "../src/components/Logout";
 import * as serviceWorker from "./serviceWorker";
 import "./style/index.css";
+import Logout from "../src/components/Logout";
 
 const cache = new InMemoryCache();
 
-const httpLink = new HttpLink({
-  uri: "http://localhost:5000/graphql"
+const HttpLink = createHttpLink({
+  uri: "http://localhost:5000/graphql",
+  credentials: "same-origin"
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -39,12 +40,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-const terminatingLink = split(({ query }) => {
-  const { kind, operation } = getMainDefinition(query);
-  return kind === "OperationDefinition" && operation === "subscription";
-}, httpLink);
-
-const link = ApolloLink.from([errorLink, terminatingLink]);
+const link = ApolloLink.from([errorLink, HttpLink]);
 
 const client = new ApolloClent({
   link,
@@ -53,7 +49,9 @@ const client = new ApolloClent({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById("root")
 );

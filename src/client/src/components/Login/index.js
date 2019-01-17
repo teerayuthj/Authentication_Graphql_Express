@@ -7,19 +7,12 @@ import { Helmet } from "react-helmet";
 
 import { LOGIN_USER } from "../../queries";
 import Content from "../../style/Content";
-import * as routes from "../constants/routes";
 import ErrorMessage from "../Error";
 
 const initialState = {
   email: "",
   password: ""
 };
-
-const LogInPage = ({ history, refetch }) => (
-  <div>
-    <LogInPage history={history} refetch={refetch} />
-  </div>
-);
 
 class loginUser extends Component {
   constructor(props) {
@@ -54,6 +47,7 @@ class loginUser extends Component {
         <Helmet>
           <title>Login</title>
         </Helmet>
+
         <Mutation mutation={LOGIN_USER} variables={{ email, password }}>
           {(login, { data, loading, error }) => {
             return (
@@ -67,7 +61,7 @@ class loginUser extends Component {
                     });
                     this.props.refetch();
                     this.clearState();
-                    this.props.history.push(routes.DASHBOARD);
+                    this.props.history.push("dashboard");
                   }}
                 >
                   <Box>
@@ -118,6 +112,4 @@ class loginUser extends Component {
   }
 }
 
-export default withRouter(LogInPage);
-
-export { loginUser };
+export default withRouter(loginUser);

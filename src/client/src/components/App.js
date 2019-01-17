@@ -1,29 +1,61 @@
 import React from "react";
-import { Route, Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import withSession from "./Session/withSession";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import Signup from "./Signup";
-import * as routes from "./constants/routes";
-import history from "./constants/history";
+import Logout from "./Logout";
+import MainLayout from "./Layout/MainLayout";
 
-const App = ({ refetch }) => (
-  <Router history={history}>
-    <div>
-      <Route exact path={routes.DASHBOARD} component={() => <Dashboard />} />
+const Root = ({ refetch, session }) => (
+  <Router>
+    <Switch>
       <Route
+        path="/"
         exact
-        path={routes.LOG_IN}
-        component={() => <Login refetch={refetch} />}
+        render={props => (
+          <MainLayout>
+            <Login {...props} refetch={refetch} />
+          </MainLayout>
+        )}
       />
       <Route
-        exact
-        path={routes.SIGN_UP}
-        component={() => <Signup refetch={refetch} />}
+        path="/login"
+        render={props => (
+          <MainLayout>
+            <Login {...props} refetch={refetch} />
+          </MainLayout>
+        )}
       />
-    </div>
+      <Route
+        path="/Signup"
+        render={props => (
+          <MainLayout>
+            <Signup {...props} refetch={refetch} />
+          </MainLayout>
+        )}
+      />
+      <Route
+        path="/dashboard"
+        render={props => (
+          <MainLayout>
+            <Dashboard {...props} session={session} />
+          </MainLayout>
+        )}
+      />
+      <Route
+        path="/logout"
+        render={props => (
+          <MainLayout>
+            <Logout {...props} />
+          </MainLayout>
+        )}
+      />
+    </Switch>
   </Router>
 );
 
-export default withSession(App);
+const App = withSession(Root);
+
+export default App;

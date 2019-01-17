@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet";
 
 import Content from "../../style/Content";
 import { SIGNUP_USER } from "../../queries";
-import * as routes from "../constants/routes";
 import ErrorMessage from "../Error";
 
 const initialState = {
@@ -16,12 +15,6 @@ const initialState = {
   passwordConfirm: "",
   passwordMatch: null
 };
-
-const SignupPage = ({ history, refetch }) => (
-  <div>
-    <Signup history={history} refetch={refetch} />
-  </div>
-);
 
 class Signup extends Component {
   constructor(props) {
@@ -83,7 +76,7 @@ class Signup extends Component {
                     });
                     this.props.refetch();
                     this.clearState();
-                    this.props.history.push(routes.LOG_IN);
+                    this.props.history.push("/login");
                   }}
                 >
                   <Box>
@@ -148,6 +141,4 @@ class Signup extends Component {
   }
 }
 
-export default withRouter(SignupPage);
-
-export { Signup };
+export default withRouter(Signup);
