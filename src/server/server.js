@@ -13,7 +13,7 @@ const models = require("./models");
 const passportConfig = require("./services/auth");
 const schema = require("./schema/schema");
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,8 +54,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Instruct Express to pass on any request made to the '/graphql' route
-// to the GraphQL instance.
 app.use(
   "/graphql",
   expressGraphQL({

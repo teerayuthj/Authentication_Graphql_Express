@@ -6,41 +6,27 @@ import { ApolloProvider } from "react-apollo";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
-import { ApolloLink } from "apollo-link";
+//import { ApolloLink } from "apollo-link";
+//import { ApolloClient } from "apollo-client";
+//import { HttpLink } from "apollo-link-http";
 
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 import "./style/index.css";
 import Logout from "../src/components/Logout";
 
-const cache = new InMemoryCache();
-
-const HttpLink = createHttpLink({
+const httpLink = createHttpLink({
   uri: "http://localhost:5000/graphql",
-  credentials: "same-origin"
+  credentials: "include"
 });
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, locations, path }) => {
-      console.log("GraphQL error", message);
-
-      if (message === "UNAUTHENTICATED") {
-        Logout(client);
-      }
-    });
-  }
-
-  if (networkError) {
-    console.log("Network error", networkError);
-
-    if (networkError.statusCode === 401) {
-      Logout(client);
-    }
+const errorLink = onError(({ networkError }) => {
+  if (networkError.statusCode === 401) {
+    Logout();
   }
 });
 
-const link = ApolloLink.from([errorLink, HttpLink]);
+const link = errorLink.concat(httpLink);
+const cache = new InMemoryCache();
 
 const client = new ApolloClent({
   link,

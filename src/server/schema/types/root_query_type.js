@@ -1,7 +1,7 @@
 const { GraphQLObjectType } = require("graphql");
 const UserType = require("./user_type");
 
-const RootQueryType = new GraphQLObjectType({
+const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     user: {
@@ -13,4 +13,4 @@ const RootQueryType = new GraphQLObjectType({
   }
 });
 
-module.exports = RootQueryType;
+module.exports = RootQuery;

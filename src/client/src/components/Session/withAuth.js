@@ -15,7 +15,7 @@ const withAuth = conditionFn => Component => props => {
       {({ data, loading, error, refetch }) => {
         if (loading) return null;
 
-        if (props.session.user && props.session.loading == null)
+        if (props.session.user == null)
           return <Login {...props} refetch={refetch} />;
 
         return conditionFn(data) ? (

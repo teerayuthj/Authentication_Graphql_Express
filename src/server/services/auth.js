@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const Strategy = require("passport-http-bearer").Strategy;
 
 const User = mongoose.model("user");
 
@@ -18,14 +19,6 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// Instructs Passport how to authenticate a user using a locally saved email
-// and password combination.  This strategy is called whenever a user attempts to
-// log in.  We first find the user model in MongoDB that matches the submitted email,
-// then check to see if the provided password matches the saved password. There
-// are two obvious failure points here: the email might not exist in our DB or
-// the password might not match the saved one.  In either case, we call the 'done'
-// callback, including a string that messages why the authentication process failed.
-// This string is provided back to the GraphQL client.
 passport.use(
   new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
     User.findOne({ email: email.toLowerCase() }, (err, user) => {
@@ -47,7 +40,21 @@ passport.use(
     });
   })
 );
-
+/*
+passport.use(
+  new Strategy(function(token, done) {
+    User.findOne({ token: token }, function(err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false);
+      }
+      return done(null, user, { scope: "read" });
+    });
+  })
+);
+*/
 // Creates a new user account.  We first check to see if a user already exists
 // with this email address to avoid making multiple accounts with identical addresses
 // If it does not, we save the existing user.  After the user is created, it is

@@ -57,7 +57,8 @@ class loginUser extends Component {
                     e.preventDefault();
                     const { email, password } = this.state;
                     await login({
-                      variables: { email, password }
+                      variables: { email, password },
+                      refetchqueries: { email, password }
                     });
                     this.props.refetch();
                     this.clearState();
