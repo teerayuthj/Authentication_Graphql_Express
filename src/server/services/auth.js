@@ -40,21 +40,7 @@ passport.use(
     });
   })
 );
-/*
-passport.use(
-  new Strategy(function(token, done) {
-    User.findOne({ token: token }, function(err, user) {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false);
-      }
-      return done(null, user, { scope: "read" });
-    });
-  })
-);
-*/
+
 // Creates a new user account.  We first check to see if a user already exists
 // with this email address to avoid making multiple accounts with identical addresses
 // If it does not, we save the existing user.  After the user is created, it is
