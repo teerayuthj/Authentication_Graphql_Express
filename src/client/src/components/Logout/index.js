@@ -7,8 +7,8 @@ import { LOGOUT_USER } from "../../queries";
 import ErrorMessage from "../Error";
 
 const initialState = {
-  id: "",
-  email: ""
+  email: "",
+  password: ""
 };
 
 class Logout extends Component {
@@ -23,10 +23,10 @@ class Logout extends Component {
     this.setState({ ...initialState });
   }
   render() {
-    const { id, email } = this.state;
+    const { email, password } = this.state;
     return (
       <div>
-        <Mutation mutation={LOGOUT_USER} variables={{ id, email }}>
+        <Mutation mutation={LOGOUT_USER} variables={{ email, password }}>
           {(logout, { data, loading, error }) => {
             return (
               <div>
@@ -35,10 +35,10 @@ class Logout extends Component {
                   onClick={async e => {
                     e.preventDefault();
                     await logout({
-                      variables: { id, email },
-                      refetchQueries: { id, email }
+                      variables: { email, password },
+                      refetchQueries: { email, password }
                     });
-                    this.props.cleint.resetStore();
+                    this.props.refetch();
                     this.clearState();
                     this.props.history.push("/login");
                   }}

@@ -12,7 +12,7 @@ const withAuth = conditionFn => Component => props => {
 
   return (
     <Query query={CURRENT_USER}>
-      {({ data, loading, error, refetch }) => {
+      {({ data, loading, refetch }) => {
         if (loading) return null;
 
         if (props.session.user == null)

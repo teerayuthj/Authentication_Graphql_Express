@@ -6,6 +6,7 @@ import { ApolloProvider } from "react-apollo";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
+import { ThemeProvider } from "styled-components";
 //import { ApolloLink } from "apollo-link";
 //import { ApolloClient } from "apollo-client";
 //import { HttpLink } from "apollo-link-http";
@@ -14,6 +15,7 @@ import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 import "./style/index.css";
 import Logout from "../src/components/Logout";
+import { theme } from "./style/globalStyle";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:5000/graphql",
@@ -35,9 +37,11 @@ const client = new ApolloClent({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );

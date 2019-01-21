@@ -7,51 +7,54 @@ import Dashboard from "./Dashboard";
 import Signup from "./Signup";
 import Logout from "./Logout";
 import MainLayout from "./Layout/MainLayout";
+import { AppWarp } from "../style/globalStyle";
 
 const Root = ({ refetch, session }) => (
   <Router>
     <Switch>
-      <Route
-        path="/"
-        exact
-        render={props => (
-          <MainLayout>
-            <Login {...props} refetch={refetch} />
-          </MainLayout>
-        )}
-      />
-      <Route
-        path="/login"
-        render={props => (
-          <MainLayout>
-            <Login {...props} refetch={refetch} />
-          </MainLayout>
-        )}
-      />
-      <Route
-        path="/Signup"
-        render={props => (
-          <MainLayout>
-            <Signup {...props} refetch={refetch} />
-          </MainLayout>
-        )}
-      />
-      <Route
-        path="/dashboard"
-        render={props => (
-          <MainLayout>
-            <Dashboard {...props} session={session} />
-          </MainLayout>
-        )}
-      />
-      <Route
-        path="/logout"
-        render={props => (
-          <MainLayout>
-            <Logout {...props} />
-          </MainLayout>
-        )}
-      />
+      <AppWarp>
+        <Route
+          path="/"
+          exact
+          render={props => (
+            <MainLayout>
+              <Login {...props} refetch={refetch} />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/login"
+          render={props => (
+            <MainLayout>
+              <Login {...props} refetch={refetch} />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/Signup"
+          render={props => (
+            <MainLayout>
+              <Signup {...props} refetch={refetch} />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/dashboard"
+          render={props => (
+            <MainLayout>
+              <Dashboard {...props} session={session} refetch={refetch} />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/logout"
+          render={props => (
+            <MainLayout>
+              <Logout {...props} refetch={refetch} />
+            </MainLayout>
+          )}
+        />
+      </AppWarp>
     </Switch>
   </Router>
 );
