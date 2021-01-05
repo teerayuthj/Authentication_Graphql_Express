@@ -11,7 +11,7 @@
     "apollo-link-http": "^1.5.9",
     "apollo-link-ws": "^1.0.12",
     "apollo-utilities": "^1.0.27",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "grommet": "^2.2.1",
